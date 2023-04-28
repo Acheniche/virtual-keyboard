@@ -33,4 +33,47 @@ const ruKeysCaps = [
     'LShift','Я','Ч','С','М','И','Т','Ь','Б','Ю',',','↑','RShift',
     'LCtrl','Win','LAlt','Space','RAlt','RCtrl','←','↓','→'];
 
+    let body = document.querySelector("body");
+
+    let header = document.createElement("header");
+    header.classList = "header";
+    header.textContent = "Virtual keyboard";
+    body.appendChild(header);
+
+    let wrapper = document.createElement("div");
+    wrapper.classList = "wrapper";
+    body.appendChild(wrapper);
+
+    let textArea = document.createElement("textarea");
+    textArea.classList = "textArea";
+    textArea.autofocus = true;
+    wrapper.appendChild(textArea);
+
+    let keyboardWrapper = document.createElement("div");
+    keyboardWrapper.classList = "keyboardWrapper";
+    wrapper.appendChild(keyboardWrapper);
+
+
+
+    let ul = document.createElement("ul");
+    let count = 0;
+
+    keyboardWrapper.appendChild(ul);
+
+    for(let i = 0; i < numberKeys.length; i++){
+        let li = document.createElement("li");
+        ul.append(li);
+    }
+    
+    document.querySelectorAll("li").forEach(element => {
+        let span = document.createElement("span");
+        element.append(span);
+    });
+
+    let numberKey = 0;
+    document.querySelectorAll("span").forEach(element => {
+        element.innerHTML = enKeys[numberKey];
+        numberKey++;
+    })
+
       
