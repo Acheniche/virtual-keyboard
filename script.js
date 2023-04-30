@@ -19,14 +19,14 @@ const ruKeys = [
     'LShift','я','ч','с','м','и','т','ь','б','ю','.','↑','RShift',
     'LCtrl','Win','LAlt','Space','RAlt','←','↓','→','RCtrl'];
 
-const enKeysCaps = [
+const enKeysShift = [
     '~','!','@','#','$','%','^','&','*','(',')','_','+','Backspace',
     'Tab','Q','W','E','R','T','Y','U','I','O','P','{','}','|','Del',
     'Caps Lock','A','S','D','F','G','H','J','K','L',':','"','Enter',
     'LShift','Z','X','C','V','B','N','M','<','>','?','↑','RShift',
-    'LCtrl','Win','LAlt','Space','RAlt','RCtrl','←','↓','→'];
+    'LCtrl','Win','LAlt','Space','RAlt','←','↓','→','RCtrl'];
 
-const ruKeysCaps = [
+const ruKeysShift = [
     'Ё','!','"','№',';','%',':','?','*','(',')','_','+','Backspace',
     'Tab','Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ','/','Del',
     'Caps Lock','Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э','Enter',
@@ -76,7 +76,6 @@ const ruKeysCaps = [
 }
 
 function addKeys(){
-    console.log(lang)
     let numberKey = 0;
     document.querySelectorAll("span").forEach(element => {
         if(lang === "en"){
@@ -99,6 +98,9 @@ function getLocalStorage(){
     if(localStorage.getItem("lang")){
         lang = localStorage.getItem("lang");
         addKeys();
+    }
+    else{
+        lang = "en";
     }
 }
 window.addEventListener("load", getLocalStorage);
@@ -135,5 +137,99 @@ function changeLang(){
 runOnKeys(() => changeLang(),"ShiftLeft", "ControlLeft");
 createKeyboard();
 
+function addShiftKeys(){
+document.addEventListener('keydown', function(event) {
+    if (event.code == 'ShiftRight' || event.code == 'ShiftLeft' && caps === false) {
+        let numberKey = 0;
+        document.querySelectorAll("span").forEach(element => {
+            if(lang === "en"){
+            element.innerHTML = enKeysShift[numberKey];
+            numberKey++;
+            }
+            else if(lang === "ru"){
+            element.innerHTML = ruKeysShift[numberKey];
+            numberKey++;  
+            }
+        })
+    }
+    else if (event.code == 'ShiftRight' || event.code == 'ShiftLeft' && caps === true) {
+        let numberKey = 0;
+        document.querySelectorAll("span").forEach(element => {
+            if(lang === "en"){
+            element.innerHTML = enKeysShift[numberKey].toLowerCase();
+            numberKey++;
+            }
+            else if(lang === "ru"){
+            element.innerHTML = ruKeysShift[numberKey].toLowerCase();
+            numberKey++;  
+            }
+        })
+    }
+  });
 
-      
+  document.addEventListener('keyup', function(event) {
+    if (event.code == 'ShiftRight' || event.code == 'ShiftLeft' && caps === false) {
+        let numberKey = 0;
+        document.querySelectorAll("span").forEach(element => {
+            if(lang === "en"){
+            element.innerHTML = enKeys[numberKey];
+            numberKey++;
+            }
+            else if(lang === "ru"){
+            element.innerHTML = ruKeys[numberKey];
+            numberKey++;  
+            }
+        })
+    }
+    else if (event.code == 'ShiftRight' || event.code == 'ShiftLeft' && caps === true) {
+        let numberKey = 0;
+        document.querySelectorAll("span").forEach(element => {
+            if(lang === "en"){
+            element.innerHTML = enKeys[numberKey].toUpperCase();
+            numberKey++;
+            }
+            else if(lang === "ru"){
+            element.innerHTML = ruKeys[numberKey].toUpperCase();
+            numberKey++;  
+            }
+        })
+    }
+  });
+}
+addShiftKeys();
+
+let caps = false;
+
+function addCaps(){
+    document.addEventListener("keydown", function(event){
+        if (event.code == "CapsLock" && caps === false){
+            caps = true;
+            let numberKey = 0;
+            document.querySelectorAll("span").forEach(element => {
+                if(lang === "en"){
+                element.innerHTML = enKeys[numberKey].toUpperCase();
+                numberKey++;
+                }
+                else if(lang === "ru"){
+                element.innerHTML = ruKeys[numberKey].toUpperCase();
+                numberKey++;  
+                }
+            })
+        }
+        else if(event.code == "CapsLock" && caps === true){
+            caps = false;
+            let numberKey = 0;
+            document.querySelectorAll("span").forEach(element => {
+                if(lang === "en"){
+                element.innerHTML = enKeys[numberKey];
+                numberKey++;
+                }
+                else if(lang === "ru"){
+                element.innerHTML = ruKeys[numberKey];
+                numberKey++;  
+                }
+            })
+        }
+    })
+}
+addCaps();
